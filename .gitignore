@@ -8,8 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
-develop-eggs/
+build/ develop-eggs/
 dist/
 downloads/
 eggs/
@@ -160,3 +159,20 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+ecg/
+ecg_300/
+ecg_500/
+ecg_1000/
+
+em/
+em_300/
+em_500/
+em_1000/
+
+ettm2/
+ettm2_300/
+ettm2_500/
+ettm2_1000/
+
+Data/datasets/

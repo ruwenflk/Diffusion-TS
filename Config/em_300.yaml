@@ -1,8 +1,8 @@
 model:
   target: Models.interpretable_diffusion.gaussian_diffusion.Diffusion_TS
   params:
-    seq_length: 24
-    feature_size: 7
+    seq_length: 300
+    feature_size: 8
     n_layer_enc: 3
     n_layer_dec: 2
     d_model: 64  # 4 X 16
@@ -20,7 +20,7 @@ model:
 solver:
   base_lr: 1.0e-5
   max_epochs: 18000
-  results_folder: ./Checkpoints_etth
+  results_folder: ./em_300/Checkpoints_em300
   gradient_accumulate_every: 2
   save_cycle: 1800  # max_epochs // 10
   ema:
@@ -43,11 +43,11 @@ dataloader:
   train_dataset:
     target: Utils.Data_utils.real_datasets.CustomDataset
     params:
-      name: etth
+      name: em
       proportion: 1.0  # Set to rate < 1 if training conditional generation
-      data_root: ./Data/datasets/ETTh.csv
-      window: 24  # seq_length
-      save2npy: True
+      data_root: ./Data/datasets/H1.5.csv
+      window: 300  # seq_length
+      save2npy: False
       neg_one_to_one: True
       seed: 123
       period: train
@@ -55,11 +55,11 @@ dataloader:
   test_dataset:
     target: Utils.Data_utils.real_datasets.CustomDataset
     params:
-      name: etth
+      name: em
       proportion: 0.9  # rate
-      data_root: ./Data/datasets/ETTh.csv
-      window: 24  # seq_length
-      save2npy: True
+      data_root: ./Data/datasets/H1.5.csv
+      window: 300  # seq_length
+      save2npy: False
       neg_one_to_one: True
       seed: 123
       period: test

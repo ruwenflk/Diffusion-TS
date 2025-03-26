@@ -1,13 +1,13 @@
 model:
   target: Models.interpretable_diffusion.gaussian_diffusion.Diffusion_TS
   params:
-    seq_length: 24
-    feature_size: 28
-    n_layer_enc: 4
-    n_layer_dec: 3
-    d_model: 96  # 4 X 24
-    timesteps: 1000
-    sampling_timesteps: 1000
+    seq_length: 1000
+    feature_size: 2
+    n_layer_enc: 3
+    n_layer_dec: 2
+    d_model: 64  # 4 X 16
+    timesteps: 500
+    sampling_timesteps: 500
     loss_type: 'l1'
     beta_schedule: 'cosine'
     n_heads: 4
@@ -19,10 +19,10 @@ model:
 
 solver:
   base_lr: 1.0e-5
-  max_epochs: 25000
-  results_folder: ./Checkpoints_energy
+  max_epochs: 18000
+  results_folder: ./ecg_1000/Checkpoints_ecg_1000
   gradient_accumulate_every: 2
-  save_cycle: 2500  # max_epochs // 10
+  save_cycle: 1800  # max_epochs // 10
   ema:
     decay: 0.995
     update_interval: 10
@@ -31,7 +31,7 @@ solver:
     target: engine.lr_sch.ReduceLROnPlateauWithWarmup
     params:
       factor: 0.5
-      patience: 5000
+      patience: 4000
       min_lr: 1.0e-5
       threshold: 1.0e-1
       threshold_mode: rel
@@ -43,11 +43,11 @@ dataloader:
   train_dataset:
     target: Utils.Data_utils.real_datasets.CustomDataset
     params:
-      name: energy
+      name: ecg
       proportion: 1.0  # Set to rate < 1 if training conditional generation
-      data_root: ./Data/datasets/energy_data.csv
-      window: 24  # seq_length
-      save2npy: True
+      data_root: ./Data/datasets/14157.csv
+      window: 1000  # seq_length
+      save2npy: False
       neg_one_to_one: True
       seed: 123
       period: train
@@ -55,11 +55,11 @@ dataloader:
   test_dataset:
     target: Utils.Data_utils.real_datasets.CustomDataset
     params:
-      name: energy
+      name: ecg
       proportion: 0.9  # rate
-      data_root: ./Data/datasets/energy_data.csv
-      window: 24  # seq_length
-      save2npy: True
+      data_root: ./Data/datasets/14157.csv
+      window: 1000  # seq_length
+      save2npy: False
       neg_one_to_one: True
       seed: 123
       period: test
@@ -67,8 +67,8 @@ dataloader:
       distribution: geometric
     coefficient: 1.0e-2
     step_size: 5.0e-2
-    sampling_steps: 250
+    sampling_steps: 200
 
-  batch_size: 64
+  batch_size: 128
   sample_size: 256
   shuffle: True

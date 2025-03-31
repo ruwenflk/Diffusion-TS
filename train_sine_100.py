@@ -31,4 +31,4 @@ if __name__ == "__main__":
     fake_data = trainer.sample(
         num=10000, size_every=128, shape=[seq_length, feature_dim]
     )
-    np.save(os.path.join(args.save_dir, f"ddpm_fake_sines.npy"), fake_data)
+    np.save(os.path.join(args.save_dir, f"sine_100.npy"), fake_data)

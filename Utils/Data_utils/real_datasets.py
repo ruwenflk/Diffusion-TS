@@ -84,6 +84,8 @@ class CustomDataset(Dataset):
             step = self.window // 10
         if self.name == "em":
             step = self.window // 10
+        if self.name == "metropt3":
+            step = self.window // 10
         data_length = self.len
 
         for index_start in np.arange(0, data_length, step):
@@ -194,13 +196,30 @@ class CustomDataset(Dataset):
         if name == "ettm2":
             df.drop(labels=["date"], axis=1, inplace=True)
         if name == "ecg":
-            df = df.iloc[:555556]
+            df = df.iloc[:500000]
             df = df[["ECG1", "ECG2"]]
         if name == "em":
             df.drop(labels=["t"], axis=1, inplace=True)
             df.drop(labels=["lstdrehmoment_act_motor_torq"], axis=1, inplace=True)
             df.drop(labels=["U32_rot_angle_rotor"], axis=1, inplace=True)
             df.drop(labels=["S32_act_rot_spd"], axis=1, inplace=True)
+        if name == "metropt3":
+            df = df.drop(
+                labels=[
+                    "Unnamed: 0",
+                    "timestamp",
+                    "COMP",
+                    "DV_eletric",
+                    "Towers",
+                    "MPG",
+                    "LPS",
+                    "Pressure_switch",
+                    "Oil_level",
+                    "Caudal_impulses",
+                ],
+                axis=1,
+            )
+            df = df.iloc[:500000]
 
         data = df.values
         scaler = MinMaxScaler()
